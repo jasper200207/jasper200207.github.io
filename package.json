@@ -2,9 +2,11 @@
   "name": "gain_blog",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://jasper200207.github.io/",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
+    "deploy": "npm run build && touch out/.nojekyll && gh-pages -d out --dotfiles",
     "start": "next start",
     "lint": "next lint"
   },
