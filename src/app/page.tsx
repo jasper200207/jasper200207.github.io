@@ -1,7 +1,6 @@
-export default function Home() {
+const Home = () => {
   return (
-    <div className="w-screen h-screen place-content-center place-items-center flex">
-      <div className="w-96 h-96 bg-white">Hello World</div>
-    </div>
+    <div className="w-full h-96 bg-lightBackWhite text-black flex place-content-center place-items-center"></div>
   );
-}
+};
+export default Home;
