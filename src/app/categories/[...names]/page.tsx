@@ -1,9 +1,34 @@
 import { allPosts } from "contentlayer/generated";
 import Link from "next/link";
 
+export async function getStaticPaths() {
+  const posts = allPosts;
+
+  let paths = [];
+  const categoryNames = Array.from(new Set(posts.map((post) => post.category)));
+  for (const categoryName of categoryNames) {
+    const subCategoryNames = Array.from(
+      new Set(
+        posts
+          .filter((post) => post.category === categoryName)
+          .map((post) => post.subCategory)
+      )
+    );
+    for (const subCategoryName of subCategoryNames) {
+      paths.push({
+        params: {
+          names: [categoryName, subCategoryName],
+        },
+      });
+    }
+  }
+
+  return { paths, fallback: false };
+}
+
 type Props = {
   params: {
-    names: string;
+    names: Array<string>;
   };
 };
 
