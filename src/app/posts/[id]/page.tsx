@@ -2,16 +2,25 @@ import { allPosts } from "contentlayer/generated";
 import { format, parseISO } from "date-fns";
 import { useMDXComponent } from "next-contentlayer/hooks";
 
+export async function getStaticPaths() {
+  const posts = allPosts;
+
+  const paths = posts.map((post) => ({
+    params: { id: post.id },
+  }));
+
+  return { paths, fallback: false };
+}
+
 type PostDetailPageProps = {
   params: {
-    slug: string;
+    id: string;
   };
 };
 
 const PostDetailPage = ({ params }: PostDetailPageProps) => {
-  const post = allPosts.find((post) => post.id === params.slug);
-  if (!post)
-    throw new Error(`해당하는 Id (${params.slug})의 게시물이 없습니다.`);
+  const post = allPosts.find((post) => post.id === params.id);
+  if (!post) throw new Error(`해당하는 Id (${params.id})의 게시물이 없습니다.`);
 
   const Content = useMDXComponent(post.body.code);
 
